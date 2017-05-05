@@ -9,14 +9,9 @@ immediatly redirects back to the app.
 
 ## Setup
 
-1. Serve up `index.html` on `http://localhost:8000` using python:
-
-    $ python -m SimpleHTTPServer
-
+1. Serve up `index.html` on `http://localhost:8000` using python: `python -m SimpleHTTPServer`
 2. Visit `http://localhost:8000?set=mysecretcookie` to set an initial cookie.
-
-3. Build and run the app in Xcode and you should see the token populate pretty 
-quickly after loading.
+3. Build and run the app in Xcode and you should see the token populate pretty quickly after loading.
 
 ## Research
 
