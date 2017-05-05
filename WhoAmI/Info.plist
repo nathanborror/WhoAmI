@@ -44,7 +44,7 @@
 			<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>SafariRedirect</string>
+				<string>whoami</string>
 			</array>
 		</dict>
 	</array>

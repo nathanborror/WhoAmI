@@ -2,13 +2,33 @@
 <html>
 <head>
     <title>Home</title>
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
 </head>
 <body>
 
+<div id="token"></div>
+
 <script type="text/javascript">
-    document.cookie = "token=supersecrettoken"
-    window.location = "SafariRedirect://?" + document.cookie
+    var params = window.location.search.substring(1).split('=')
+    var expire = getExpirationDate();
+
+    if (params[0] == "redirect") {
+        document.location = params[1] + "?" + document.cookie;
+        // document.getElementById("redirect").href = params[1] + "?" + document.cookie;
+    } 
+    if (params[0] == "set") {
+        document.cookie = "token=" + params[1] + "; expires=" + expire.toGMTString();
+    }
+
+    document.getElementById("token").innerText = document.cookie;
+
+    function getExpirationDate() {
+        var now = new Date();
+        var time = now.getTime();
+        var expire = time + (1000 * 36000);
+        now.setTime(expire);
+        return now;
+    }
 </script>
 
 </body>

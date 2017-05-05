@@ -26,14 +26,14 @@ class ViewController: UITableViewController {
     func loginAttempt() {
         NotificationCenter.default.addObserver(self, selector: #selector(handleLogin), name: SafariRedirectNotification, object: nil)
 
-        let url = URL(string: "http://localhost:8000?redirect=SafariRedirect://")!
+        let url = URL(string: "http://localhost:8000/?redirect=whoami://")!
         safari = SFSafariViewController(url: url)
-
-        addSafariController(safari)
+        present(safari!, animated: true, completion: nil)
     }
 
     func handleLogin(_ notification: Notification) {
         NotificationCenter.default.removeObserver(self, name: SafariRedirectNotification, object: nil)
+        safari?.dismiss(animated: true, completion: nil)
 
         guard let url = notification.object as? URL else {
             return
@@ -41,27 +41,10 @@ class ViewController: UITableViewController {
         guard let params = url.query?.characters.split(separator: "=").map(String.init) else {
             return
         }
+        guard params.count > 1 else {
+            return
+        }
         token = params[1]
-        removeSafariController(safari)
-    }
-
-    func addSafariController(_ controller: SFSafariViewController?) {
-        guard let controller = controller else {
-            return
-        }
-        addChildViewController(controller)
-        view.addSubview(controller.view)
-        controller.didMove(toParentViewController: self)
-        controller.view.frame = CGRect(x: 0, y: 0, width: 1, height: 1)
-    }
-
-    func removeSafariController(_ controller: SFSafariViewController?) {
-        guard let controller = controller else {
-            return
-        }
-        controller.willMove(toParentViewController: nil)
-        controller.view.removeFromSuperview()
-        controller.removeFromParentViewController()
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
